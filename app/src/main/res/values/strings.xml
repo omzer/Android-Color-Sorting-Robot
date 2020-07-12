@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Color Sort Robot</string>
+    <string name="connect_to_bluetooth_explanation">To Start, you need to connect to your bluetooth module, turn on your bluetooth and choose.</string>
+    <string name="no_bluetooth">No bluetooth device detected.</string>
+    <string name="bluetooth_off">Device is turned off..</string>
+</resources>

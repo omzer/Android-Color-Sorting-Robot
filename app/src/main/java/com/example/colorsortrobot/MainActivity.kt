@@ -1,0 +1,77 @@
+package com.example.colorsortrobot
+
+import android.app.Activity
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.content.Intent
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+
+private lateinit var paired_btn: Button
+private var bluetoothAdapter: BluetoothAdapter? = null
+private var pairedDevices: Set<BluetoothDevice>? = null
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        initBluetoothAdapter()
+        viewBluetoothData()
+
+
+    }
+
+    private fun viewBluetoothData() {
+        val list = ArrayList<String>()
+
+        if (pairedDevices!!.isNotEmpty()) {
+            for (bt: BluetoothDevice in pairedDevices!!) {
+                list.add(bt.name + "\n" + bt.address);
+            }
+        }
+        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, list)
+        bluetoothListView.adapter = adapter
+        bluetoothListView.setOnItemClickListener { _, view, _, _ ->
+            // Get the device MAC address, the last 17 chars in the View
+            val info: String = (view as TextView).text.toString()
+            val address = info.substring(info.length - 17)
+            // Make an intent to start next activity.
+            Toast.makeText(this, "connected to $address", Toast.LENGTH_SHORT).show();
+            // todo Change the activity.
+        }
+    }
+
+    private fun initBluetoothAdapter() {
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, R.string.no_bluetooth, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        bluetoothAdapter!!.let {
+            pairedDevices = it.bondedDevices
+            if (!it.isEnabled) {
+                //Ask to the user turn the bluetooth on
+                val turnBTon = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(turnBTon, 1);
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            initBluetoothAdapter()
+            viewBluetoothData()
+        } else {
+            Toast.makeText(applicationContext, R.string.bluetooth_off, Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+
