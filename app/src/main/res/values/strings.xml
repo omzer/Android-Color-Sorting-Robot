@@ -4,4 +4,5 @@
     <string name="no_bluetooth">No bluetooth device detected.</string>
     <string name="bluetooth_off">Device is turned off.</string>
     <string name="connect_success">Connected successfully.</string>
+    <string name="enable_bluetooth">please open bluetooth</string>
 </resources>
