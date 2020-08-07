@@ -8,15 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.colorsortrobot.adapters.DevicesAdapter
 import com.example.colorsortrobot.DataSources.Prefs
 import com.example.colorsortrobot.R
 import com.example.colorsortrobot.ViewModels.BluetoothViewModel
+import com.example.colorsortrobot.adapters.DevicesAdapter
+import com.example.colorsortrobot.adapters.interfaces.ItemClickedListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.devices_list.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ItemClickedListener {
 
     private lateinit var viewModel: BluetoothViewModel
 
@@ -60,9 +61,8 @@ class MainActivity : AppCompatActivity() {
     private fun showConnectedDevicesList() {
         devices_list.visibility = View.VISIBLE
         val bluetoothDevicesList = viewModel.getBluetoothDevicesList()
-        // todo if the list is empty - show empty state
         val recent: String = Prefs.getLatestAddress()
-        val devicesAdapter = DevicesAdapter(bluetoothDevicesList, recent)
+        val devicesAdapter = DevicesAdapter(bluetoothDevicesList, recent, this)
         recyclerView.adapter = devicesAdapter
     }
 
@@ -75,5 +75,11 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         viewModel.onActivityResult(requestCode, resultCode)
+    }
+
+    override fun onItemClicked(address: String) {
+        val intent = Intent(this, ControlActivity::class.java)
+        intent.putExtra(ControlActivity.addressKey, address)
+        startActivity(intent)
     }
 }
