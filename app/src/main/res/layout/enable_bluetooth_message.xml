@@ -22,16 +22,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/enable_bluetooth"
+        android:text="@string/enable_bluetooth_explain"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/button"
+    <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:text="enable" />
+        android:layout_margin="16dp"
+        android:drawableLeft="@drawable/bluetooth"
+        android:text="@string/enable_bluetooth"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        app:backgroundTint="@color/colorEnable" />
 
 
 </LinearLayout>

@@ -55,10 +55,6 @@ class MainActivity : AppCompatActivity() {
     private fun showEnableBluetoothMessage() {
         hideStuff()
         enableBluetooth.visibility = View.VISIBLE
-        enableBluetooth.findViewById<Button>(R.id.button).setOnClickListener {
-
-        }
-
     }
 
 }

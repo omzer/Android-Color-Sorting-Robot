@@ -4,5 +4,6 @@
     <string name="no_bluetooth">No bluetooth device detected.</string>
     <string name="bluetooth_off">Device is turned off.</string>
     <string name="connect_success">Connected successfully.</string>
-    <string name="enable_bluetooth">In order to be able to use the App, you need to enable bluetooth from your settings.</string>
+    <string name="enable_bluetooth_explain">In order to be able to use the App, you need to enable bluetooth from your settings.</string>
+    <string name="enable_bluetooth">Enable Bluetooth</string>
 </resources>
