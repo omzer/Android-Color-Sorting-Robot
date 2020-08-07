@@ -1,5 +1,6 @@
 package com.example.colorsortrobot
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -20,14 +21,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        init()
+        initViews()
+        initListeners()
         observeChanges()
 
         viewModel.checkBluetoothConnection()
         loadingDialog.show()
     }
 
-    private fun init() {
+    private fun initViews() {
         // init viewModel
         viewModel = ViewModelProvider(this).get(BluetoothViewModel::class.java)
 
@@ -35,10 +37,16 @@ class MainActivity : AppCompatActivity() {
         loadingDialog = SpotsDialog.Builder().setContext(this).build()
     }
 
+    private fun initListeners() {
+        enableBluetooth.findViewById<Button>(R.id.button).setOnClickListener {
+            viewModel.askSystemToTurnBluetoothOn(this)
+        }
+    }
+
     private fun observeChanges() {
         // Observe for bluetooth status changed
         viewModel.getStatusObserver().observe(this, Observer {
-            loadingDialog.hide()
+            hideStuff()
             when (it) {
                 true -> viewModel.getList() // todo: get list of connected devices, highlight the one connected to last time
                 false -> showEnableBluetoothMessage()
@@ -57,4 +65,8 @@ class MainActivity : AppCompatActivity() {
         enableBluetooth.visibility = View.VISIBLE
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        viewModel.onActivityResult(requestCode, resultCode)
+    }
 }

@@ -1,10 +1,13 @@
 package com.example.colorsortrobot.ViewModels
 
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class BluetoothViewModel : ViewModel() {
+    private val BLUETOOTH_REQUEST_CODE: Int = 911
 
     // Observers
     private val bluetoothConnectionStatus: MutableLiveData<Boolean?> = MutableLiveData()
@@ -21,24 +24,21 @@ class BluetoothViewModel : ViewModel() {
         }
     }
 
+    fun askSystemToTurnBluetoothOn(activity: Activity) {
+        val turnBTIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        activity.startActivityForResult(turnBTIntent, BLUETOOTH_REQUEST_CODE)
+    }
+
     fun getList() {}
+
+    fun onActivityResult(requestCode: Int, resultCode: Int) {
+        if (requestCode == BLUETOOTH_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            bluetoothConnectionStatus.value = true
+        }
+    }
 
 }
 
-//import android.app.Activity
-//import android.bluetooth.BluetoothAdapter
-//import android.bluetooth.BluetoothDevice
-//import android.content.Intent
-//import android.os.Bundle
-//import android.widget.ArrayAdapter
-//import android.widget.TextView
-//import android.widget.Toast
-//import androidx.appcompat.app.AppCompatActivity
-//import kotlinx.android.synthetic.main.activity_main.*
-//
-//private lateinit var bluetoothAdapter: BluetoothAdapter
-//private var pairedDevices: Set<BluetoothDevice>? = null
-//
 //class MainActivity : AppCompatActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
