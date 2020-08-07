@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:drawableLeft="@drawable/bluetooth"
+        android:drawableLeft="@drawable/ic_bluetooth"
         android:text="@string/enable_bluetooth"
         android:textAllCaps="false"
         android:textColor="@color/white"
