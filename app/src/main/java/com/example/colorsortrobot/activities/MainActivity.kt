@@ -1,4 +1,4 @@
-package com.example.colorsortrobot.Activites
+package com.example.colorsortrobot.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.colorsortrobot.Adapters.DevicesAdapter
+import com.example.colorsortrobot.adapters.DevicesAdapter
 import com.example.colorsortrobot.DataSources.Prefs
 import com.example.colorsortrobot.R
 import com.example.colorsortrobot.ViewModels.BluetoothViewModel

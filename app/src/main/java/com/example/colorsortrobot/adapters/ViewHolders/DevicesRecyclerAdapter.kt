@@ -1,4 +1,4 @@
-package com.example.colorsortrobot.Adapters.ViewHolders
+package com.example.colorsortrobot.adapters.ViewHolders
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice

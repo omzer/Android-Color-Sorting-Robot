@@ -1,4 +1,4 @@
-package com.example.colorsortrobot.Activites
+package com.example.colorsortrobot.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activites.ControlActivity"
+            android:name=".activities.ControlActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activites.MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
