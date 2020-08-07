@@ -8,14 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.colorsortrobot.ViewModels.BluetoothViewModel
-import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: BluetoothViewModel
-    private lateinit var loadingDialog: android.app.AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +24,11 @@ class MainActivity : AppCompatActivity() {
         observeChanges()
 
         viewModel.checkBluetoothConnection()
-        loadingDialog.show()
     }
 
     private fun initViews() {
         // init viewModel
         viewModel = ViewModelProvider(this).get(BluetoothViewModel::class.java)
-
-        // init loading dialog
-        loadingDialog = SpotsDialog.Builder().setContext(this).build()
     }
 
     private fun initListeners() {
@@ -49,20 +43,15 @@ class MainActivity : AppCompatActivity() {
             hideStuff()
             when (it) {
                 true -> viewModel.getList() // todo: get list of connected devices, highlight the one connected to last time
-                false -> showEnableBluetoothMessage()
-                null -> showEnableBluetoothMessage() // todo not supported dialog
+                false -> enableBluetooth.visibility = View.VISIBLE
+                null -> noBluetoothDetected.visibility = View.VISIBLE
             }
         })
     }
 
     private fun hideStuff() {
-        loadingDialog.hide()
         enableBluetooth.visibility = View.GONE
-    }
-
-    private fun showEnableBluetoothMessage() {
-        hideStuff()
-        enableBluetooth.visibility = View.VISIBLE
+        noBluetoothDetected.visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

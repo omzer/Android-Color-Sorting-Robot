@@ -18,7 +18,13 @@
     <include
         android:id="@+id/enableBluetooth"
         layout="@layout/enable_bluetooth_message"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/noBluetoothDetected"
+        layout="@layout/no_bluetooth_detected"
         android:visibility="gone"
         tools:visibility="visible" />
+
 
 </FrameLayout>
