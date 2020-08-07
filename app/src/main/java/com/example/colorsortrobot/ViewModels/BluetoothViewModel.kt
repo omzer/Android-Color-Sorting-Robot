@@ -2,6 +2,7 @@ package com.example.colorsortrobot.ViewModels
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,7 +30,9 @@ class BluetoothViewModel : ViewModel() {
         activity.startActivityForResult(turnBTIntent, BLUETOOTH_REQUEST_CODE)
     }
 
-    fun getList() {}
+    fun getBluetoothDevicesList(): Set<BluetoothDevice> {
+        return BluetoothAdapter.getDefaultAdapter().bondedDevices
+    }
 
     fun onActivityResult(requestCode: Int, resultCode: Int) {
         if (requestCode == BLUETOOTH_REQUEST_CODE && resultCode == Activity.RESULT_OK) {

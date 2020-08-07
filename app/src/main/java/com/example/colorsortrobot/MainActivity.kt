@@ -1,5 +1,6 @@
 package com.example.colorsortrobot
 
+import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -42,16 +43,25 @@ class MainActivity : AppCompatActivity() {
         viewModel.getStatusObserver().observe(this, Observer {
             hideStuff()
             when (it) {
-                true -> viewModel.getList() // todo: get list of connected devices, highlight the one connected to last time
+                true -> showConnectedDevicesList()
                 false -> enableBluetooth.visibility = View.VISIBLE
                 null -> noBluetoothDetected.visibility = View.VISIBLE
             }
         })
     }
 
+    private fun showConnectedDevicesList() {
+        devices_list.visibility = View.VISIBLE
+        val bluetoothDevicesList = viewModel.getBluetoothDevicesList()
+        for (bt: BluetoothDevice in bluetoothDevicesList) {
+
+        }
+    }
+
     private fun hideStuff() {
         enableBluetooth.visibility = View.GONE
         noBluetoothDetected.visibility = View.GONE
+        devices_list.visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

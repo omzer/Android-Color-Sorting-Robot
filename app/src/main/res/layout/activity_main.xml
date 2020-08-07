@@ -10,7 +10,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
         android:layout_gravity="top"
         android:background="@color/toolbarColor"
         app:title="Sorting Colors Robot" />
@@ -23,8 +23,12 @@
     <include
         android:id="@+id/noBluetoothDetected"
         layout="@layout/no_bluetooth_detected"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/devices_list"
+        layout="@layout/devices_list"
         android:visibility="gone"
         tools:visibility="visible" />
-
 
 </FrameLayout>
