@@ -1,11 +1,13 @@
-package com.example.colorsortrobot.adapters.ViewHolders
+package com.example.colorsortrobot.Adapters.ViewHolders
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.colorsortrobot.DataSources.Prefs
 import com.example.colorsortrobot.R
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.bluetooth_device_item.view.*
@@ -20,6 +22,10 @@ class DevicesListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             itemView.findViewById<MaterialButton>(R.id.recentBadge)
                 .recentBadge
                 .setBackgroundColor(Color.parseColor("#28E832"))
+        }
+
+        itemView.findViewById<CardView>(R.id.itemCard).itemCard.setOnClickListener {
+            Prefs.setLatestAddress(deviceInfo.address)
         }
     }
 

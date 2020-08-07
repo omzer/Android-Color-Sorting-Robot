@@ -10,7 +10,8 @@
     android:clickable="true"
     android:elevation="12dp"
     android:focusable="true"
-    tools:context=".MainActivity">
+    android:foreground="?android:attr/selectableItemBackground"
+    tools:context=".Activites.MainActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,6 +58,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="#6A787A"
+            android:clickable="false"
             android:enabled="false"
             android:paddingHorizontal="5dp"
             android:text="@string/recently_connected"

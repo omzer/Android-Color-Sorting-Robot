@@ -1,4 +1,4 @@
-package com.example.colorsortrobot.adapters
+package com.example.colorsortrobot.Adapters
 
 import android.bluetooth.BluetoothDevice
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.colorsortrobot.R
-import com.example.colorsortrobot.adapters.ViewHolders.DevicesListViewHolder
+import com.example.colorsortrobot.Adapters.ViewHolders.DevicesListViewHolder
 
 class DevicesAdapter(
     private val list: List<BluetoothDevice>, private val latestConnectedAddress: String
