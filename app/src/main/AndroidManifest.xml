@@ -2,8 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.colorsortrobot">
 
+    <!-- Declare permissions -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Declare features -->
+    <uses-feature android:name="android.hardware.camera.any" />
+
 
     <application
         android:allowBackup="true"

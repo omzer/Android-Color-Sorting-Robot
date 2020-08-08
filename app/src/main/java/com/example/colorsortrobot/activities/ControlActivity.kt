@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.colorsortrobot.R
 
 class ControlActivity : AppCompatActivity() {
-    var address: String? = null
 
     companion object {
         const val addressKey: String = "ADDRESS"
@@ -14,6 +13,7 @@ class ControlActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_control)
-        address = intent.getStringExtra(addressKey)
+        val address = intent.getStringExtra(addressKey)
+
     }
 }
