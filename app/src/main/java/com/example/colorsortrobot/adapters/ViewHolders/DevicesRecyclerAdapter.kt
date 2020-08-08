@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.colorsortrobot.DataSources.Prefs
+import com.example.colorsortrobot.local_db.Prefs
 import com.example.colorsortrobot.R
 import com.example.colorsortrobot.models.DeviceItemModel
 import com.google.android.material.button.MaterialButton

@@ -1,4 +1,4 @@
-package com.example.colorsortrobot.ViewModels
+package com.example.colorsortrobot.view_models
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
