@@ -23,7 +23,7 @@ class BluetoothConnectViewModel : ViewModel() {
 
     fun connectToAddress(address: String) {
         connectionStatusObserver.value = ProgressType.STARTED
-        Handler().postDelayed({ BluetoothConnectTask().execute(address) }, 1000)
+        BluetoothConnectTask().execute(address)
     }
 
     class BluetoothConnectTask : AsyncTask<String, ProgressType, Boolean>() {
@@ -47,6 +47,7 @@ class BluetoothConnectViewModel : ViewModel() {
             val bluetoothDevice: BluetoothDevice = bluetoothAdapter.getRemoteDevice(address)
             socket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(uuid)
             bluetoothAdapter.cancelDiscovery()
+            socket?.connect()
         }
 
         override fun onCancelled() {
