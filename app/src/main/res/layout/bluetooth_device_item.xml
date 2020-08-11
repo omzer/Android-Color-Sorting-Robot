@@ -11,7 +11,7 @@
     android:elevation="12dp"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.ConnectionActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

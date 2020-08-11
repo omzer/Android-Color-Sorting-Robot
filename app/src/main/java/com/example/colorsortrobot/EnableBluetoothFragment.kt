@@ -21,21 +21,5 @@ class EnableBluetoothFragment() : Fragment() {
         return inflater.inflate(R.layout.enable_bluetooth_fragment, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        bluetoothViewModel = ViewModelProvider(this).get(BluetoothViewModel::class.java)
-        observeChanges()
-        bluetoothViewModel.askSystemToTurnBluetoothOn(requireActivity())
-    }
-
-
-    private fun observeChanges() = bluetoothViewModel.getStatusObserver().observe(
-        viewLifecycleOwner, Observer { result ->
-            when (result) {
-                true -> onResume()
-                false -> onResume()
-                null -> onResume()
-            }
-        })
 
 }

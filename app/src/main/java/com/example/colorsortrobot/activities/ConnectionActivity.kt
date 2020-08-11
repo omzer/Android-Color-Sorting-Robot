@@ -8,7 +8,7 @@ import com.example.colorsortrobot.R
 import com.example.colorsortrobot.local_db.Prefs
 
 
-class MainActivity : AppCompatActivity() {
+class ConnectionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

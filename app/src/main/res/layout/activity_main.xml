@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.ConnectionActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
