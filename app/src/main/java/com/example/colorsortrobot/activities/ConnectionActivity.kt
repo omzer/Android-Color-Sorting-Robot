@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.colorsortrobot.EnableBluetoothFragment
+import com.example.colorsortrobot.fragments.EnableBluetoothFragment
 import com.example.colorsortrobot.R
 import com.example.colorsortrobot.fragments.NoBluetoothDetectedFragment
 import com.example.colorsortrobot.local_db.Prefs
