@@ -19,12 +19,12 @@ class ConnectionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.connection_activity)
 
         Prefs.initPrefs(this)
         bluetoothViewModel = ViewModelProvider(this).get(BluetoothViewModel::class.java)
-        replaceFragment(EnableBluetoothFragment())
         observeChanges()
+        bluetoothViewModel.checkBluetoothConnection()
     }
 
     private fun observeChanges() = bluetoothViewModel.getStatusObserver().observe(
