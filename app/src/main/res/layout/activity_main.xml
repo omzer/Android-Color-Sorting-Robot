@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
+        android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@color/toolbarColor"
         app:title="Sorting Colors Robot" />
 
-    <include
-        android:id="@+id/enableBluetooth"
-        layout="@layout/enable_bluetooth_message"
-        android:visibility="gone" />
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <include
-        android:id="@+id/noBluetoothDetected"
-        layout="@layout/no_bluetooth_detected"
-        android:visibility="gone" />
-
-    <include
-        android:id="@+id/devices_list"
-        layout="@layout/devices_list"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-</FrameLayout>
+</LinearLayout>
