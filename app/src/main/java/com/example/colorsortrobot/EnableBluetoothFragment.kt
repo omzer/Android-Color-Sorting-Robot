@@ -5,20 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.colorsortrobot.view_models.BluetoothViewModel
+import com.example.colorsortrobot.activities.ConnectionActivity
 
-class EnableBluetoothFragment() : Fragment() {
+class EnableBluetoothFragment : Fragment() {
 
-    private lateinit var bluetoothViewModel: BluetoothViewModel
+    private lateinit var activity: ConnectionActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.enable_bluetooth_fragment, container, false)
+        activity = requireActivity() as ConnectionActivity
+        val view = inflater.inflate(R.layout.enable_bluetooth_fragment, container, false)
+        view.findViewById<View>(R.id.button).setOnClickListener { activity.askForPermissions() }
+        return view
     }
 
 
