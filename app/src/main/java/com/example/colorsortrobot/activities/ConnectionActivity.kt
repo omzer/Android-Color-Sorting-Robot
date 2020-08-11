@@ -11,18 +11,18 @@ import com.example.colorsortrobot.fragments.DevicesListFragment
 import com.example.colorsortrobot.fragments.EnableBluetoothFragment
 import com.example.colorsortrobot.fragments.NoBluetoothDetectedFragment
 import com.example.colorsortrobot.local_db.Prefs
-import com.example.colorsortrobot.view_models.BluetoothViewModel
+import com.example.colorsortrobot.view_models.BluetoothDiscoveryViewModel
 
 
 class ConnectionActivity : AppCompatActivity() {
-    private lateinit var bluetoothViewModel: BluetoothViewModel
+    private lateinit var bluetoothViewModel: BluetoothDiscoveryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.connection_activity)
 
         Prefs.initPrefs(this)
-        bluetoothViewModel = ViewModelProvider(this).get(BluetoothViewModel::class.java)
+        bluetoothViewModel = ViewModelProvider(this).get(BluetoothDiscoveryViewModel::class.java)
         observeChanges()
         bluetoothViewModel.checkBluetoothConnection()
     }

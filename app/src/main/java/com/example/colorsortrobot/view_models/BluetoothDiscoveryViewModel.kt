@@ -7,8 +7,10 @@ import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class BluetoothViewModel : ViewModel() {
-    private val BLUETOOTH_REQUEST_CODE: Int = 911
+class BluetoothDiscoveryViewModel : ViewModel() {
+    companion object {
+        private const val BLUETOOTH_REQUEST_CODE: Int = 911
+    }
 
     // Observers
     private val bluetoothConnectionStatus: MutableLiveData<Boolean?> = MutableLiveData()
@@ -39,5 +41,6 @@ class BluetoothViewModel : ViewModel() {
             bluetoothConnectionStatus.value = true
         }
     }
+
 
 }

@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.colorsortrobot.R
-import com.example.colorsortrobot.view_models.BluetoothViewModel
+import com.example.colorsortrobot.view_models.BluetoothDiscoveryViewModel
 import com.example.colorsortrobot.view_models.CameraViewModel
 import kotlinx.android.synthetic.main.activity_control.*
 
 class ControlActivity : AppCompatActivity() {
-    private lateinit var bluetoothViewModel: BluetoothViewModel
+    private lateinit var bluetoothViewModel: BluetoothDiscoveryViewModel
 
     companion object {
         const val addressKey: String = "ADDRESS"
@@ -37,7 +37,7 @@ class ControlActivity : AppCompatActivity() {
 
     private fun initViewModels() {
         cameraViewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
-        bluetoothViewModel = ViewModelProvider(this).get(BluetoothViewModel::class.java)
+        bluetoothViewModel = ViewModelProvider(this).get(BluetoothDiscoveryViewModel::class.java)
         cameraViewModel.setActivity(this, cameraPreview)
     }
 
