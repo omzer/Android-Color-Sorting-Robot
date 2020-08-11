@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.colorsortrobot.R
 import com.example.colorsortrobot.activities.ConnectionActivity
+import kotlinx.android.synthetic.main.enable_bluetooth_fragment.*
 
 class EnableBluetoothFragment : Fragment() {
 
@@ -18,10 +19,12 @@ class EnableBluetoothFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         activity = requireActivity() as ConnectionActivity
-        val view = inflater.inflate(R.layout.enable_bluetooth_fragment, container, false)
-        view.findViewById<View>(R.id.button).setOnClickListener { activity.askForPermissions() }
-        return view
+        return inflater.inflate(R.layout.enable_bluetooth_fragment, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
+        button.setOnClickListener { activity.askForPermissions() }
+    }
 
 }

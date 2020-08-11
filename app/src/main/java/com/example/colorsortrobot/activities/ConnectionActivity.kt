@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.colorsortrobot.fragments.EnableBluetoothFragment
 import com.example.colorsortrobot.R
+import com.example.colorsortrobot.fragments.DevicesListFragment
+import com.example.colorsortrobot.fragments.EnableBluetoothFragment
 import com.example.colorsortrobot.fragments.NoBluetoothDetectedFragment
 import com.example.colorsortrobot.local_db.Prefs
 import com.example.colorsortrobot.view_models.BluetoothViewModel
@@ -29,13 +30,14 @@ class ConnectionActivity : AppCompatActivity() {
     private fun observeChanges() = bluetoothViewModel.getStatusObserver().observe(
         this, Observer {
             when (it) {
-                true -> replaceFragment(NoBluetoothDetectedFragment())
+                true -> replaceFragment(DevicesListFragment())
                 false -> replaceFragment(EnableBluetoothFragment())
                 null -> replaceFragment(NoBluetoothDetectedFragment())
             }
         }
     )
 
+    fun getDevicesList() = bluetoothViewModel.getBluetoothDevicesList()
 
     fun askForPermissions() {
         bluetoothViewModel.askSystemToTurnBluetoothOn(this)
