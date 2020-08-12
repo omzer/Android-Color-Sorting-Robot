@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.os.AsyncTask
-import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.colorsortrobot.enums.ProgressType
@@ -24,6 +23,19 @@ class BluetoothConnectViewModel : ViewModel() {
     fun connectToAddress(address: String) {
         connectionStatusObserver.value = ProgressType.STARTED
         BluetoothConnectTask().execute(address)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        socket?.close()
+    }
+
+    fun sendData(data: Int) {
+        try {
+            socket?.outputStream?.write(data)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 
     class BluetoothConnectTask : AsyncTask<String, ProgressType, Boolean>() {
