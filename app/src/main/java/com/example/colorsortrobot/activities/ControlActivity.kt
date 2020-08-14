@@ -39,7 +39,7 @@ class ControlActivity : AppCompatActivity() {
 
     private fun observeChanges() {
         bluetoothViewModel.getConnectionStatusObserver().observe(this, Observer {
-            if (baseContext != null) when (it) {
+            when (it) {
                 ProgressType.STARTED -> loadingDialog.show()
                 ProgressType.FINISHED -> runTheCamera()
                 ProgressType.CANCELLED -> finish()
