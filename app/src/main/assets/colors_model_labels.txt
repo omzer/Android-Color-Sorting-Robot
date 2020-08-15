@@ -1,2 +1,6 @@
-Sad
-Happy
+Red
+Blue
+Green
+Blank
+Yellow
+Orange

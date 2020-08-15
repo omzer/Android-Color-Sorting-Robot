@@ -25,6 +25,12 @@ class ControlActivity : AppCompatActivity() {
 
     companion object {
         const val addressKey: String = "ADDRESS"
+        private val RED: Int = Color.parseColor("#F7072B")
+        private val GREEN: Int = Color.parseColor("#3BEB6A")
+        private val BLUE: Int = Color.parseColor("#076FF7")
+        private val ORANGE: Int = Color.parseColor("#D99116")
+        private val YELLOW: Int = Color.parseColor("#E7EB09")
+        private val BLANK: Int = Color.parseColor("#FFFFFF")
     }
 
     private lateinit var cameraViewModel: CameraViewModel
@@ -87,15 +93,20 @@ class ControlActivity : AppCompatActivity() {
                 onClassificationResultReceived(it)
                 handler.postDelayed(runnable, 200)
             }
-            classifierTask.addOnFailureListener { Log.i("TAG", "Classifier failed: ${it.message}") }
+            classifierTask.addOnFailureListener { it.printStackTrace() }
 
         }
     }
 
     private fun onClassificationResultReceived(result: String) {
+        Log.i("Tag", result)
         when (result) {
-            "Happy" -> rootLayout.setBackgroundColor(Color.GREEN)
-            "Sad" -> rootLayout.setBackgroundColor(Color.RED)
+            "Blank" -> rootLayout.setBackgroundColor(BLANK)
+            "Red" -> rootLayout.setBackgroundColor(RED)
+            "Green" -> rootLayout.setBackgroundColor(GREEN)
+            "Blue" -> rootLayout.setBackgroundColor(BLUE)
+            "Yellow" -> rootLayout.setBackgroundColor(YELLOW)
+            "Orange" -> rootLayout.setBackgroundColor(ORANGE)
         }
     }
 
