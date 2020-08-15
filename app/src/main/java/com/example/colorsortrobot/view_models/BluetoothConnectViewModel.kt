@@ -6,22 +6,22 @@ import android.bluetooth.BluetoothSocket
 import android.os.AsyncTask
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.colorsortrobot.enums.ProgressType
+import com.example.colorsortrobot.enums.BluetoothConnectionStatus
 import java.util.*
 
 class BluetoothConnectViewModel : ViewModel() {
 
     companion object {
-        private val connectionStatusObserver: MutableLiveData<ProgressType> = MutableLiveData()
+        private val CONNECTION_STATUS_OBSERVER: MutableLiveData<BluetoothConnectionStatus> = MutableLiveData()
         private var socket: BluetoothSocket? = null
         private val bluetoothAdapter: BluetoothAdapter by lazy { BluetoothAdapter.getDefaultAdapter() }
         private val uuid: UUID by lazy { UUID.fromString("00001101-0000-1000-8000-00805F9B34FB") }
     }
 
-    fun getConnectionStatusObserver() = connectionStatusObserver
+    fun getConnectionStatusObserver() = CONNECTION_STATUS_OBSERVER
 
     fun connectToAddress(address: String) {
-        connectionStatusObserver.value = ProgressType.STARTED
+        CONNECTION_STATUS_OBSERVER.value = BluetoothConnectionStatus.STARTED
         BluetoothConnectTask().execute(address)
     }
 
@@ -38,7 +38,7 @@ class BluetoothConnectViewModel : ViewModel() {
         }
     }
 
-    class BluetoothConnectTask : AsyncTask<String, ProgressType, Boolean>() {
+    class BluetoothConnectTask : AsyncTask<String, BluetoothConnectionStatus, Boolean>() {
 
         override fun doInBackground(vararg params: String): Boolean {
             val address: String = params[0]
@@ -64,12 +64,12 @@ class BluetoothConnectViewModel : ViewModel() {
 
         override fun onCancelled() {
             super.onCancelled()
-            connectionStatusObserver.value = ProgressType.CANCELLED
+            CONNECTION_STATUS_OBSERVER.value = BluetoothConnectionStatus.CANCELLED
         }
 
         override fun onPostExecute(result: Boolean?) {
             super.onPostExecute(result)
-            connectionStatusObserver.value = ProgressType.FINISHED
+            CONNECTION_STATUS_OBSERVER.value = BluetoothConnectionStatus.FINISHED
         }
 
     }

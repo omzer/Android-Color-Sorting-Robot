@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.colorsortrobot.R
-import com.example.colorsortrobot.enums.ProgressType
+import com.example.colorsortrobot.enums.BluetoothConnectionStatus
+import com.example.colorsortrobot.enums.ModelInitializingStatus
+import com.example.colorsortrobot.matchine_learning.ColorsClassifier
 import com.example.colorsortrobot.view_models.BluetoothConnectViewModel
 import com.example.colorsortrobot.view_models.CameraViewModel
 import dmax.dialog.SpotsDialog
@@ -15,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_control.*
 class ControlActivity : AppCompatActivity() {
     private lateinit var bluetoothViewModel: BluetoothConnectViewModel
     private lateinit var loadingDialog: AlertDialog
+    private lateinit var classifier: ColorsClassifier
 
     companion object {
         const val addressKey: String = "ADDRESS"
@@ -40,17 +43,26 @@ class ControlActivity : AppCompatActivity() {
     private fun observeChanges() {
         bluetoothViewModel.getConnectionStatusObserver().observe(this, Observer {
             when (it) {
-                ProgressType.STARTED -> loadingDialog.show()
-                ProgressType.FINISHED -> runTheCamera()
-                ProgressType.CANCELLED -> finish()
+                BluetoothConnectionStatus.STARTED -> loadingDialog.show()
+                BluetoothConnectionStatus.FINISHED -> initializeClassifier()
+                BluetoothConnectionStatus.CANCELLED -> finish()
             }
+        })
+
+        classifier.getInitializingStatus().observe(this, Observer {
+            when (it) {
+                ModelInitializingStatus.FAILED -> finish()
+                ModelInitializingStatus.SUCCEED -> runTheCamera()
+            }
+        })
+
+        classifier.getClassifierResult().observe(this, Observer {
+            print(it)
         })
     }
 
-
-    override fun onDestroy() {
-        loadingDialog.dismiss()
-        super.onDestroy()
+    private fun initializeClassifier() {
+        classifier.initialize()
     }
 
     private fun runTheCamera() {
@@ -67,6 +79,7 @@ class ControlActivity : AppCompatActivity() {
         bluetoothViewModel = ViewModelProvider(this).get(BluetoothConnectViewModel::class.java)
         cameraViewModel.setActivity(this, cameraPreview)
         loadingDialog = SpotsDialog.Builder().setContext(this).build()
+        classifier = ColorsClassifier(this)
     }
 
     private fun start() {
@@ -77,6 +90,11 @@ class ControlActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         cameraViewModel.onRequestPermissionsResult(requestCode)
+    }
+
+    override fun onDestroy() {
+        loadingDialog.dismiss()
+        super.onDestroy()
     }
 
 }
