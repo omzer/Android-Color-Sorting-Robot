@@ -3,7 +3,6 @@ package com.example.colorsortrobot.matchine_learning
 import android.app.Activity
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
-import com.example.colorsortrobot.enums.ModelInitializingStatus
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks.call
 import org.tensorflow.lite.Interpreter
@@ -27,7 +26,6 @@ class ColorsClassifier(private val activity: Activity) {
     private val executorService: ExecutorService = Executors.newCachedThreadPool()
     private var gpuDelegate: GpuDelegate? = null
     private var isInitialized = false
-    private val initializingStatus: MutableLiveData<ModelInitializingStatus> = MutableLiveData()
     private val classifierResult: MutableLiveData<String> = MutableLiveData()
 
     // Image variables
@@ -44,7 +42,6 @@ class ColorsClassifier(private val activity: Activity) {
 
 
     // Getters
-    fun getInitializingStatus(): MutableLiveData<ModelInitializingStatus> = initializingStatus
     fun getClassifierResult(): MutableLiveData<String> = classifierResult
 
 
@@ -58,7 +55,6 @@ class ColorsClassifier(private val activity: Activity) {
                 }
             )
         } catch (ex: Exception) {
-            initializingStatus.value = ModelInitializingStatus.FAILED
             return null
         }
     }
@@ -80,7 +76,6 @@ class ColorsClassifier(private val activity: Activity) {
         this.interpreter = interpreter
 
         isInitialized = true
-        initializingStatus.value = ModelInitializingStatus.SUCCEED
     }
 
 

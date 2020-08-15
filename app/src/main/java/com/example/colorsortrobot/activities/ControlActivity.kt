@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.colorsortrobot.R
 import com.example.colorsortrobot.enums.BluetoothConnectionStatus
-import com.example.colorsortrobot.enums.ModelInitializingStatus
 import com.example.colorsortrobot.matchine_learning.ColorsClassifier
 import com.example.colorsortrobot.view_models.BluetoothConnectViewModel
 import com.example.colorsortrobot.view_models.CameraViewModel
@@ -45,28 +44,20 @@ class ControlActivity : AppCompatActivity() {
             when (it) {
                 BluetoothConnectionStatus.STARTED -> loadingDialog.show()
                 BluetoothConnectionStatus.FINISHED -> initializeClassifier()
-                BluetoothConnectionStatus.CANCELLED -> finish()
+                BluetoothConnectionStatus.CANCELLED -> initializeClassifier()
             }
-        })
-
-        classifier.getInitializingStatus().observe(this, Observer {
-            when (it) {
-                ModelInitializingStatus.FAILED -> finish()
-                ModelInitializingStatus.SUCCEED -> runTheCamera()
-            }
-        })
-
-        classifier.getClassifierResult().observe(this, Observer {
-            print(it)
         })
     }
 
     private fun initializeClassifier() {
-        classifier.initialize()
+        val initializingTask = classifier.initialize()
+        initializingTask?.addOnSuccessListener { runTheCamera() }
+        initializingTask?.addOnFailureListener { finish() }
     }
 
     private fun runTheCamera() {
-        loadingDialog.hide()
+        loadingDialog.dismiss()
+
         if (cameraViewModel.allPermissionsGranted()) {
             start()
         } else {
