@@ -1,7 +1,10 @@
 package com.example.colorsortrobot.activities
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +20,8 @@ class ControlActivity : AppCompatActivity() {
     private lateinit var bluetoothViewModel: BluetoothConnectViewModel
     private lateinit var loadingDialog: AlertDialog
     private lateinit var classifier: ColorsClassifier
+    private val handler: Handler = Handler()
+    private lateinit var runnable: Runnable
 
     companion object {
         const val addressKey: String = "ADDRESS"
@@ -40,18 +45,22 @@ class ControlActivity : AppCompatActivity() {
     }
 
     private fun observeChanges() {
-        bluetoothViewModel.getConnectionStatusObserver().observe(this, Observer {
-            when (it) {
+        bluetoothViewModel.getConnectionStatusObserver().observe(this, Observer { status ->
+            when (status) {
                 BluetoothConnectionStatus.STARTED -> loadingDialog.show()
                 BluetoothConnectionStatus.FINISHED -> initializeClassifier()
-                BluetoothConnectionStatus.CANCELLED -> initializeClassifier()
+                BluetoothConnectionStatus.CANCELLED -> finish()
+                null -> finish()
             }
         })
     }
 
     private fun initializeClassifier() {
         val initializingTask = classifier.initialize()
-        initializingTask?.addOnSuccessListener { runTheCamera() }
+        initializingTask?.addOnSuccessListener {
+            runTheCamera()
+            handler.postDelayed(runnable, 2000)
+        }
         initializingTask?.addOnFailureListener { finish() }
     }
 
@@ -71,20 +80,36 @@ class ControlActivity : AppCompatActivity() {
         cameraViewModel.setActivity(this, cameraPreview)
         loadingDialog = SpotsDialog.Builder().setContext(this).build()
         classifier = ColorsClassifier(this)
+        runnable = Runnable {
+            val classifierTask = classifier.classifyAsync(cameraPreview.bitmap!!)
+
+            classifierTask.addOnSuccessListener {
+                onClassificationResultReceived(it)
+                handler.postDelayed(runnable, 200)
+            }
+            classifierTask.addOnFailureListener { Log.i("TAG", "Classifier failed: ${it.message}") }
+
+        }
+    }
+
+    private fun onClassificationResultReceived(result: String) {
+        when (result) {
+            "Happy" -> rootLayout.setBackgroundColor(Color.GREEN)
+            "Sad" -> rootLayout.setBackgroundColor(Color.RED)
+        }
     }
 
     private fun start() {
         cameraViewModel.startCamera()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, p: Array<String>, res: IntArray) {
         cameraViewModel.onRequestPermissionsResult(requestCode)
     }
 
     override fun onDestroy() {
         loadingDialog.dismiss()
+        handler.removeCallbacks(runnable)
         super.onDestroy()
     }
 

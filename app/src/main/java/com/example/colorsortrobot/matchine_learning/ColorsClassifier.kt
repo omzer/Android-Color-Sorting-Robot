@@ -2,7 +2,6 @@ package com.example.colorsortrobot.matchine_learning
 
 import android.app.Activity
 import android.graphics.Bitmap
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks.call
 import org.tensorflow.lite.Interpreter
@@ -26,7 +25,6 @@ class ColorsClassifier(private val activity: Activity) {
     private val executorService: ExecutorService = Executors.newCachedThreadPool()
     private var gpuDelegate: GpuDelegate? = null
     private var isInitialized = false
-    private val classifierResult: MutableLiveData<String> = MutableLiveData()
 
     // Image variables
     private var inputImageWidth: Int = 0
@@ -39,11 +37,6 @@ class ColorsClassifier(private val activity: Activity) {
         private const val IMAGE_MEAN = 127.5f
         private const val IMAGE_STD = 127.5f
     }
-
-
-    // Getters
-    fun getClassifierResult(): MutableLiveData<String> = classifierResult
-
 
     fun initialize(): Task<Void>? {
         return try {
@@ -95,7 +88,6 @@ class ColorsClassifier(private val activity: Activity) {
         interpreter.run(byteBuffer, output)
         val index = getMaxResult(output[0])
 
-        classifierResult.value = labels[index]
         return labels[index]
     }
 

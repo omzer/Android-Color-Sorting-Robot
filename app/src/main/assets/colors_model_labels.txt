@@ -1,2 +1,2 @@
-0 Sad
-1 Happy
+Sad
+Happy
