@@ -26,7 +26,8 @@
         <androidx.camera.view.PreviewView
             android:id="@+id/cameraPreview"
             android:layout_width="@dimen/camera_preview_size"
-            android:layout_height="@dimen/camera_preview_size" />
+            android:layout_height="@dimen/camera_preview_size"
+            android:elevation="0dp" />
     </androidx.cardview.widget.CardView>
 
 </FrameLayout>
